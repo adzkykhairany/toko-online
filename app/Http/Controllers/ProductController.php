@@ -7,7 +7,7 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function createProduct(Request $request)
+    public function create(Request $request)
     {
         $validatedData = $request->validate([
             'nama_produk' => 'required|string',
@@ -24,14 +24,14 @@ class ProductController extends Controller
         return response()->json(['message' => 'Produk berhasil dibuat'], 201);
     }
 
-    public function getAllProducts()
+    public function getAll()
     {
         $products = Product::all();
 
         return response()->json($products);
     }
 
-    public function getProductById($id)
+    public function getById($id)
     {
         $product = Product::find($id);
 
@@ -42,7 +42,7 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function updateProduct(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'nama_produk' => 'required|string',
@@ -64,7 +64,7 @@ class ProductController extends Controller
         return response()->json(['message' => 'Produk berhasil diupdate']);
     }
 
-    public function deleteProduct($id)
+    public function delete($id)
     {
         $product = Product::find($id);
 
@@ -77,21 +77,21 @@ class ProductController extends Controller
         return response()->json(['message' => 'Produk berhasil dihapus']);
     }
 
-    public function getAvailableProducts()
+    public function getAvailable()
     {
         $products = Product::where('stok', '>', 0)->get();
 
         return response()->json($products);
     }
 
-    public function getUnavailableProducts()
+    public function getUnavailable()
     {
         $products = Product::where('stok', 0)->get();
 
         return response()->json($products);
     }
 
-    public function updateProductStock(Request $request, $id)
+    public function updateStock(Request $request, $id)
     {
         $validatedData = $request->validate([
             'stock' => 'required|integer|min:0',
