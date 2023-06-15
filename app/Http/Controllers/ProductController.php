@@ -4,10 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Controllers;
 
 class ProductController extends Controller
 {
-    public function create(Request $request)
+    public function index()
+    {
+        $products = Product::all();
+
+        return view('products.index', compact('products'));
+    }
+
+    public function create()
+    {
+        return view('products.create');
+    }
+
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'nama_produk' => 'required|string',
@@ -21,14 +34,7 @@ class ProductController extends Controller
         $product->stok = $validatedData['stok'];
         $product->save();
 
-        return response()->json(['message' => 'Produk berhasil dibuat'], 201);
-    }
-
-    public function getAll()
-    {
-        $products = Product::all();
-
-        return response()->json($products);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil dibuat');
     }
 
     public function getById($id)
@@ -39,7 +45,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'Produk tidak ditemukan'], 404);
         }
 
-        return response()->json($product);
+        return view('products.getAll', compact('product'));
     }
 
     public function update(Request $request, $id)
@@ -61,7 +67,7 @@ class ProductController extends Controller
         $product->stok = $validatedData['stok'];
         $product->save();
 
-        return response()->json(['message' => 'Produk berhasil diupdate']);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate');
     }
 
     public function delete($id)
@@ -74,22 +80,23 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return response()->json(['message' => 'Produk berhasil dihapus']);
+        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus');
     }
 
     public function getAvailable()
     {
-        $products = Product::where('stok', '>', 0)->get();
+    $products = Product::where('stok', '>', 0)->get();
 
-        return response()->json($products);
+    return view('products.available', compact('products'));
     }
 
     public function getUnavailable()
     {
-        $products = Product::where('stok', 0)->get();
+    $products = Product::where('stok', 0)->get();
 
-        return response()->json($products);
+    return view('products.unavailable', compact('products'));
     }
+
 
     public function updateStock(Request $request, $id)
     {
@@ -106,6 +113,6 @@ class ProductController extends Controller
         $product->stok = $validatedData['stock'];
         $product->save();
 
-        return response()->json(['message' => 'Stok produk berhasil diupdate']);
+        return redirect()->route('products.index')->with('success', 'Stok produk berhasil diupdate');
     }
 }

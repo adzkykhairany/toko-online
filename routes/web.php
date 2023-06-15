@@ -14,14 +14,14 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::post('/products', [ProductController::class, 'create']);
-Route::get('/products', [ProductController::class, 'getAll']);
-Route::get('/products/{id}', [ProductController::class, 'getById']);
-Route::put('/products/{id}', [ProductController::class, 'update']);
-Route::delete('/products/{id}', [ProductController::class, 'delete']);
-
-Route::get('/products/available', [ProductController::class, 'getAvailable']);
-Route::get('/products/unavailable', [ProductController::class, 'getUnavailable']);
-Route::put('/products/{id}/stock', [ProductController::class, 'updateStock']);
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{id}', [ProductController::class, 'getById'])->name('products.getById');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
+Route::get('/products/available', 'ProductController@getAvailable')->name('products.getAvailable');
+Route::get('/products/unavailable', 'ProductController@getUnavailable')->name('products.getUnavailable');
+Route::put('/products/{id}/stock', [ProductController::class, 'updateStock'])->name('products.updateStock');
 
 ?>
