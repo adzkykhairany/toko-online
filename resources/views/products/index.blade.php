@@ -119,14 +119,14 @@
                     <td>{{ $product->harga }}</td>
                     <td>{{ $product->stok }}</td>
                     <td>
-                        <a href="{{ route('products.getById', $product->id) }}" class="btn">Lihat</a>
+                        <a href="{{ route('products.getAvailable', $product->id) }}" class="btn">Lihat</a>
                         <a href="{{ route('products.update', $product->id) }}" class="btn">Edit</a>
                         <form action="{{ route('products.delete', $product->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
-                        @if ($product->stok > 0)
+                        @if ($product->stok >= 0)
                             <form action="{{ route('products.updateStock', $product->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('PUT')

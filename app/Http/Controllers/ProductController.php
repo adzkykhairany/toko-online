@@ -37,16 +37,6 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produk berhasil dibuat');
     }
 
-    public function getById($id)
-    {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return response()->json(['message' => 'Produk tidak ditemukan'], 404);
-        }
-
-        return view('products.getAll', compact('product'));
-    }
 
     public function update(Request $request, $id)
     {
@@ -86,7 +76,9 @@ class ProductController extends Controller
     public function getAvailable()
     {
     $products = Product::where('stok', '>', 0)->get();
-
+    if ($products->isEmpty()) {
+        return response()->json(['message' => 'Produk tidak ditemukan'], 404);
+    }
     return view('products.available', compact('products'));
     }
 
