@@ -29,6 +29,29 @@
         table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #286090;
+            border-color: #204d74;
+        }
     </style>
 </head>
 <body>
@@ -54,5 +77,8 @@
             @endforeach
         </tbody>
     </table>
+
+    <a href="{{ route('products.index') }}" class="btn">Kembali</a>
+
 </body>
 </html>

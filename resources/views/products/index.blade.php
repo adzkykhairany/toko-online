@@ -11,6 +11,7 @@
 
         h1 {
             margin-top: 20px;
+            text-align: center;
         }
 
         table {
