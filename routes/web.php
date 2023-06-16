@@ -20,8 +20,6 @@ Route::get('/products/create', [ProductController::class, 'create'])->name('prod
 
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 
-Route::get('/products/{id}', [ProductController::class, 'getAvailable'])->name('products.getAvailable');
-
 Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 
 Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');

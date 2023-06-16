@@ -84,10 +84,11 @@ class ProductController extends Controller
 
     public function getUnavailable()
     {
-    $products = Product::where('stok', 0)->get();
-
-    return view('products.unavailable', compact('products'));
+        $products = Product::where('stok', 0)->get();
+    
+        return view('products.unavailable', compact('products'));
     }
+    
 
 
     public function updateStock(Request $request, $id)

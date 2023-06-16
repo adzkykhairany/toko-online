@@ -29,6 +29,22 @@
         table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
+        .btn-kembali {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #337ab7;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-kembali:hover {
+        background-color: #286090;
+        border-color: #204d74;
+
+    }
     </style>
 </head>
 <body>
@@ -54,5 +70,8 @@
             @endforeach
         </tbody>
     </table>
+
+    <a href="{{ route('products.index') }}" class="btn-kembali">Kembali</a>
+
 </body>
 </html>
