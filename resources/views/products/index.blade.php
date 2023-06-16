@@ -102,7 +102,7 @@
     <a href="{{ route('products.getAvailable') }}" class="btn">Tampilkan Produk Tersedia</a>
     <a href="{{ route('products.getUnavailable') }}" class="btn">Tampilkan Produk Habis</a>
 
-    <table>
+    <table align="center">
         <thead>
             <tr>
                 <th>No.</th>
@@ -121,7 +121,7 @@
                     <td>{{ $product->stok }}</td>
                     <td>
                         <a href="{{ route('products.getAvailable', $product->id) }}" class="btn">Lihat</a>
-                        <a href="{{ route('products.update', $product->id) }}" class="btn">Edit</a>
+                        <a href="{{ route('products.edit', $product->id) }}" class="btn">Edit</a>
                         <form action="{{ route('products.delete', $product->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')

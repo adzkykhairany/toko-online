@@ -37,6 +37,12 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produk berhasil dibuat');
     }
 
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+
+        return view('products.edit', compact('product'));
+    }
 
     public function update(Request $request, $id)
     {
@@ -47,15 +53,7 @@ class ProductController extends Controller
         ]);
 
         $product = Product::find($id);
-
-        if (!$product) {
-            return response()->json(['message' => 'Produk tidak ditemukan'], 404);
-        }
-
-        $product->nama_produk = $validatedData['nama_produk'];
-        $product->harga = $validatedData['harga'];
-        $product->stok = $validatedData['stok'];
-        $product->save();
+        $product->update($validatedData);
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate');
     }
