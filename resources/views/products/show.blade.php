@@ -1,9 +1,7 @@
-<!-- resources/views/products/unavailable.blade.php -->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Produk Habis</title>
+    <title>Detail Produk</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
@@ -36,10 +34,6 @@
             border-bottom: 1px solid #ddd;
         }
 
-        table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
         .btn {
             display: inline-block;
             padding: 6px 12px;
@@ -66,30 +60,27 @@
     </style>
 </head>
 <body>
-    <h1>Produk Habis</h1>
+    <h1>Detail Produk</h1>
 
     <div class="card">
-    <table>
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Nama Produk</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($products as $key => $product)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ $product->nama_produk }}</td>
-                        <td>{{ $product->harga }}</td>
-                        <td>{{ $product->stok }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
+        <table>
+            <tr>
+                <th>ID</th>
+                <td>{{ $product->id }}</td>
+            </tr>
+            <tr>
+                <th>Nama Produk</th>
+                <td>{{ $product->nama_produk }}</td>
+            </tr>
+            <tr>
+                <th>Harga</th>
+                <td>{{ $product->harga }}</td>
+            </tr>
+            <tr>
+                <th>Stok</th>
+                <td>{{ $product->stok }}</td>
+            </tr>
         </table>
-        <br>
         <a href="{{ route('products.index') }}" class="btn">Kembali</a>
     </div>
 </body>

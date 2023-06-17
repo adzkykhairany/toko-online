@@ -1,17 +1,24 @@
-<!-- resources/views/products/index.blade.php -->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Daftar Produk</title>
+    <title>Toko Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Poppins;
         }
 
         h1 {
             margin-top: 20px;
             text-align: center;
+        }
+
+        .card {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
         }
 
         table {
@@ -23,7 +30,7 @@
         table th,
         table td {
             padding: 8px;
-            text-align: left;
+            text-align: center;
             border-bottom: 1px solid #ddd;
         }
 
@@ -89,6 +96,11 @@
             cursor: pointer;
         }
     </style>
+    <script>
+        function confirmDelete() {
+            return confirm('Apakah Anda yakin ingin menghapus produk ini?');
+        }
+    </script>
 </head>
 <body>
     <h1>Daftar Produk</h1>
@@ -99,51 +111,53 @@
         </div>
     @endif
 
-    <a href="{{ route('products.getAvailable') }}" class="btn">Tampilkan Produk Tersedia</a>
-    <a href="{{ route('products.getUnavailable') }}" class="btn">Tampilkan Produk Habis</a>
-
-    <table align="center">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Nama Produk</th>
-                <th>Harga</th>
-                <th>Stok</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($products as $key => $product)
+    <div class="card">
+        <a href="{{ route('products.available') }}" class="btn">Tampilkan Produk Tersedia</a>
+        <a href="{{ route('products.unavailable') }}" class="btn">Tampilkan Produk Habis</a>
+        <br>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $product->nama_produk }}</td>
-                    <td>{{ $product->harga }}</td>
-                    <td>{{ $product->stok }}</td>
-                    <td>
-                        <a href="{{ route('products.getAvailable', $product->id) }}" class="btn">Lihat</a>
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn">Edit</a>
-                        <form action="{{ route('products.delete', $product->id) }}" method="POST" style="display: inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Hapus</button>
-                        </form>
-                        @if ($product->stok >= 0)
-                            <form action="{{ route('products.updateStock', $product->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('PUT')
-                                <div class="form-group">
-                                    <label for="stock">Stok Baru:</label>
-                                    <input type="number" name="stock" id="stock" required min="0">
-                                    <button type="submit" class="btn">Update Stok</button>
-                                </div>
-                            </form>
-                        @endif
-                    </td>
+                    <th>No.</th>
+                    <th>Nama Produk</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Aksi</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <a href="{{ route('products.create') }}" class="btn">Tambah Produk</a>
+            </thead>
+            <tbody>
+                @foreach ($products as $key => $product)
+                    <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $product->nama_produk }}</td>
+                        <td>{{ $product->harga }}</td>
+                        <td>{{ $product->stok }}</td>
+                        <td>
+                            <a href="{{ route('products.show', $product->id) }}" class="btn">Lihat</a>
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn">Edit</a>
+                            <form action="{{ route('products.delete', $product->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirmDelete()">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                            @if ($product->stok >= 0)
+                                <form action="{{ route('products.updateStock', $product->id) }}" method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="form-group">
+                                        <label for="stock" align="left">Stok Baru:</label>
+                                        <input type="number" name="stock" id="stock" required min="0">
+                                        <button type="submit" class="btn">Update Stok</button>
+                                    </div>
+                                </form>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <br>
+        <a href="{{ route('products.create') }}" class="btn">Tambah Produk</a>
+    </div>
 </body>
 </html>

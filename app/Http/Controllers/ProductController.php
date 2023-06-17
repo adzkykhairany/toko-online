@@ -34,7 +34,13 @@ class ProductController extends Controller
         $product->stok = $validatedData['stok'];
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dibuat');
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambah');
+    }
+
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
     }
 
     public function edit($id)
@@ -71,24 +77,20 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus');
     }
 
-    public function getAvailable()
+    public function available()
     {
     $products = Product::where('stok', '>', 0)->get();
-    if ($products->isEmpty()) {
-        return response()->json(['message' => 'Produk tidak ditemukan'], 404);
-    }
+
     return view('products.available', compact('products'));
     }
 
-    public function getUnavailable()
+    public function unavailable()
     {
-        $products = Product::where('stok', 0)->get();
-    
-        return view('products.unavailable', compact('products'));
+    $products = Product::where('stok', 0)->get();
+
+    return view('products.unavailable', compact('products'));
     }
     
-
-
     public function updateStock(Request $request, $id)
     {
         $validatedData = $request->validate([
